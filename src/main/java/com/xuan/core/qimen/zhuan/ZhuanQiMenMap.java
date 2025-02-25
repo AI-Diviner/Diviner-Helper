@@ -363,6 +363,35 @@ public class ZhuanQiMenMap {
         }
     };
 
+    public static final Map<String, String> JIE_QI_FU_TOU = new HashMap<String, String>() {
+        {
+            put("立春", "己卯");
+            put("雨水", "甲子");
+            put("惊蛰", "甲午");
+            put("春分", "己酉");
+            put("清明", "甲子");
+            put("谷雨", "甲午");
+            put("立夏", "己卯");
+            put("小满", "甲子");
+            put("芒种", "甲午");
+            put("夏至", "己酉");
+            put("小暑", "甲子");
+            put("大暑", "甲午");
+            put("立秋", "己卯");
+            put("处暑", "甲子");
+            put("白露", "甲午");
+            put("秋分", "己酉");
+            put("寒露", "甲子");
+            put("霜降", "甲午");
+            put("立冬", "己卯");
+            put("小雪", "甲子");
+            put("大雪", "甲午");
+            put("冬至", "己酉");
+            put("小寒", "甲子");
+            put("大寒", "甲午");
+        }
+    };
+
     /**
      * 阴阳遁对应的二十四节气
      */
