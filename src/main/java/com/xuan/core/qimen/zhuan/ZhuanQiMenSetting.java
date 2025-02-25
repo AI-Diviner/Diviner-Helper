@@ -246,13 +246,14 @@ public class ZhuanQiMenSetting {
      * @param qiMenType 奇门类型（0:年家奇门。1:月家奇门。2:日家奇门。3:时家奇门）
      */
     public void setQiMenType(int qiMenType) {
-        if (qiMenType != 0 && qiMenType != 1 && qiMenType != 2 && qiMenType != 3) {
+        if (qiMenType != 0 && qiMenType != 1 && qiMenType != 2 && qiMenType != 3 && qiMenType != 4) {
             this.qiMenType = 3;
         } else {
             if (qiMenType == 0) this.paiPanMark = "年家奇门（转盘拆补法）";
             if (qiMenType == 1) this.paiPanMark = "月家奇门（转盘拆补法）";
             if (qiMenType == 2) this.paiPanMark = "日家奇门（转盘拆补法）";
             if (qiMenType == 3) this.paiPanMark = "时家奇门（转盘拆补法）";
+            if (qiMenType == 4) this.paiPanMark = "时家奇门（转盘置润法）";
             this.qiMenType = qiMenType;
         }
     }

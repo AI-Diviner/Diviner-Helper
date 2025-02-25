@@ -1,5 +1,6 @@
 package com.xuan.core.qimen.zhuan;
 
+import cn.hutool.core.date.DateUtil;
 import com.nlf.calendar.EightChar;
 import com.nlf.calendar.Lunar;
 import com.nlf.calendar.Solar;
@@ -328,6 +329,9 @@ public class ZhuanQiMen {
      * 天盘奇仪与落宫地支的关系，不包含[天禽星]携带的奇仪（1~9宫）
      */
     private Map<Integer, List<List<String>>> tianPanQiYiLuoGongExTqLink;
+    // 置润使用
+    private Solar jieQiSolar;
+    private Solar fuTouSolar;
 
 //************************************************************************************************************************************
 
@@ -630,6 +634,50 @@ public class ZhuanQiMen {
                 }
             }
         }
+        // 时家奇门 置润法
+        if (setting.getQiMenType() == 4) {
+            // 节气日期
+            if ((!"".equals(getLunar().getJieQi()))) {
+                this.jieQi = getLunar().getJieQi(); // 节气
+            } else {
+                this.jieQi = getLunar().getPrevJieQi(setting.getJieQi() == 0).getName(); // 获取上一个节气
+            }
+            this.jieQiSolar = getSolar().getLunar().getJieQiTable().get(this.jieQi); // 节气日期
+            String needFuTou = ZhuanQiMenMap.JIE_QI_FU_TOU.get(this.jieQi); // 需要的符头
+            Lunar baseLunar = this.jieQiSolar.getLunar();
+            int a = 0;
+            int b = 0;
+            String futoua = "";
+            String futoub = "";
+            Solar futouSolara = null;
+            Solar futouSolarb = null;
+            for (int i = 0; i < 365; i++) {
+                if (a > 0 && b > 0) {
+                    if (a < b) {
+                        this.fuTou = futoua;
+                        this.fuTouSolar = futouSolara;
+                    } else {
+                        this.fuTou = futoub;
+                        this.fuTouSolar = futouSolarb;
+                    }
+                    break;
+                } else {
+                    String prevDayGanZhi = baseLunar.next(-i).getDayInGanZhiExact();
+                    String nextDayGanZhi = baseLunar.next(i).getDayInGanZhiExact();
+                    if (prevDayGanZhi.equals(needFuTou) && a == 0) {
+                        futoua = prevDayGanZhi;
+                        futouSolara = baseLunar.getSolar().next(-i);
+                        a = i;
+                    }
+                    if (nextDayGanZhi.equals(needFuTou) && b == 0) {
+                        futoub = nextDayGanZhi;
+                        futouSolarb = baseLunar.getSolar().next(i);
+                        b = i;
+                    }
+
+                }
+            }
+        }
 
     }
 
@@ -759,6 +807,39 @@ public class ZhuanQiMen {
             if ("中元".equals(getSanYuan())) this.juShu = juShu.get(1);
             if ("下元".equals(getSanYuan())) this.juShu = juShu.get(2);
         }
+        // 置润法
+        if(setting.getQiMenType() == 4){
+            Date panDate = new Date(getSolar().getYear() - 1900, getSolar().getMonth() - 1, getSolar().getDay(), getSolar().getHour(), getSolar().getMinute());
+            Date fuTouDate = new Date(fuTouSolar.getYear() - 1900, fuTouSolar.getMonth() - 1, fuTouSolar.getDay(), fuTouSolar.getHour(), fuTouSolar.getMinute());
+            Date jieQiDate = new Date(jieQiSolar.getYear() - 1900, jieQiSolar.getMonth() - 1, jieQiSolar.getDay(), jieQiSolar.getHour(), jieQiSolar.getMinute());
+            //判断是否需要置润
+            //超神 节气早于符头
+            boolean isChaoShen = jieQiDate.before(fuTouDate) &&
+                    DateUtil.beginOfDay(panDate).before(DateUtil.beginOfDay(fuTouDate));;
+            //接气 节气晚于符头
+            boolean isJieQi = jieQiDate.after(fuTouDate);
+
+            this.sanYuan = ZhuanQiMenMap.RI_ZHU_SAN_YUAN.get(getDayGanZhi());
+            List<Integer> juShuList = juShuList = ZhuanQiMenMap.JU_SHU.get(jieQi);
+
+            if (isChaoShen) {
+                String useJieQi = new Lunar(jieQiSolar.next(-1)).getPrevJieQi(setting.getJieQi() == 0).getName();
+                juShuList = ZhuanQiMenMap.JU_SHU.get(useJieQi);
+            }
+            if (isJieQi) {
+                juShuList = ZhuanQiMenMap.JU_SHU.get(jieQi);
+            }
+
+            int standardJu = 0;
+            if ("上元".equals(getSanYuan())) {
+                standardJu = juShuList.get(0);
+            } else if ("中元".equals(getSanYuan())) {
+                standardJu = juShuList.get(1);
+            } else if ("下元".equals(getSanYuan())) {
+                standardJu = juShuList.get(2);
+            }
+            this.juShu = standardJu;
+        }
 
     }
 
@@ -790,7 +871,7 @@ public class ZhuanQiMen {
         }
 
         // 3、时家奇门
-        if (setting.getQiMenType() == 3) {
+        if (setting.getQiMenType() == 3 || setting.getQiMenType() == 4) {
             Map<String, String> map = ZhuanQiMenMap.JIE_QI_YIN_YANG_DUN; // 二十四节气对应阴阳遁
             this.yinYangDun = map.get(getJieQi());
         }
