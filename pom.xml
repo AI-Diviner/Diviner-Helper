@@ -20,6 +20,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- 依赖版本管理 -->
         <spring.core.version>5.3.29</spring.core.version>
+        <hutool.version>5.8.29</hutool.version>
         <tomcat.embed.core.version>9.0.78</tomcat.embed.core.version>
         <junit.version>4.13.2</junit.version> <!-- junit -->
         <lombok.version>1.18.20</lombok.version> <!-- lombok -->
@@ -94,6 +95,12 @@
             <groupId>cn.6tail</groupId>
             <artifactId>lunar</artifactId>
             <version>${lunar.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
     </dependencies>
 
