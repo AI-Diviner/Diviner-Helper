@@ -1,21 +1,6 @@
 <h1 align="center" style="text-shadow:2px 2px 5px rgb(200, 200, 200);">
-    常用排盘工具
+    常用排盘工具Java库
 </h1>
-<p align="center">
-    在线演示:
-    <a href="https://muxuange.cn/tool" target="_blank">
-    	点击查看
-    </a>
-</p>
-<p align="center">
-    最新代码:
-    <a href="https://gitee.com/shan-dai/xuan" target="_blank">
-    	点击查看
-    </a>
-</p>
-<p align="center" style="font-size:15px; background-color:rgb(245, 245, 245); border-radius:50px;">
-    v1.0.27 - 更新停止
-</p>
 
 # **【八字排盘】**
 
@@ -159,11 +144,6 @@ public class MeiHuaTest {
 ```
 公历:2024年1月1日0时0分0秒   农历:二〇二三年冬月二十(早)子时   星期:周一   八字:[癸卯, 甲子, 甲子, 甲子]   八字五行:[水木, 木水, 木水, 木水]   八字纳音:[金箔金, 海中金, 海中金, 海中金]   卦码:346   上卦:离(☲)   下卦:震(☳)   动爻:六   本卦:火雷噬嗑(䷔)   变卦:震为雷(䷲)   互卦:水山蹇(䷦)   错卦:水风井(䷯)   综卦:山火贲(䷕)
 ```
-
 ## 界面参考
 
 ![paipan](https://muxuange-pic.oss-cn-qingdao.aliyuncs.com/pic/929de5cb-761c-4505-97b5-429b359eaed1.png)
-
-<p align="right" style="margin:-11px 0 -11px 0; color:green;">
-    ℹ 此工具已停止更新，最新代码：<a href="https://gitee.com/shan-dai/xuan">点击查看</a>。
-</p>
